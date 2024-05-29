@@ -1,7 +1,6 @@
 // This template deploys an Azure Storage account, and then configures it to support static website hosting.
 // Enabling static website hosting isn't possible directly in Bicep or an ARM template,
-// so this sample uses a deployment script to enable the feature.
-// Updated by Harry - 28/05/2024
+// so it uses a deployment script to enable the feature.
 
 @description('The location into which the resources should be deployed.')
 param location string = resourceGroup().location
@@ -22,17 +21,17 @@ param storageSku string = 'Standard_LRS'
 param indexDocumentPath string = 'index.html'
 
 @description('The contents of the web index document.')
-param indexDocumentContents string = '<h1>Static website</h1>'
+param indexDocumentContents string = '<h1>Example static website</h1>'
 
 @description('The path to the web error document.')
 param errorDocument404Path string = 'error.html'
 
 @description('The contents of the web error document.')
-param errorDocument404Contents string = '<h1>404 error page</h1>'
+param errorDocument404Contents string = '<h1>Example 404 error page</h1>'
 
 resource contributorRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-05-01-preview' existing = {
   scope: subscription()
-    // This is the Storage Account Contributor role, which is the minimum role permission we can give. See https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#:~:text=17d1049b-9a84-46fb-8f53-869881c3d3ab
+  // This is the Storage Account Contributor role, which is the minimum role permission we can give. See https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#:~:text=17d1049b-9a84-46fb-8f53-869881c3d3ab
   name: '17d1049b-9a84-46fb-8f53-869881c3d3ab'
 }
 
@@ -45,17 +44,13 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-04-01' = {
     supportsHttpsTrafficOnly: true
     minimumTlsVersion: 'TLS1_2'
     accessTier: 'Hot'
-    allowSharedKeyAccess: false
-    networkAcls: {
-      defaultAction: 'Deny'
-    }
   }
   sku: {
     name: storageSku
   }
 }
 
-resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' = {
+resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-07-31-preview' = {
   name: 'DeploymentScript'
   location: location
 }
