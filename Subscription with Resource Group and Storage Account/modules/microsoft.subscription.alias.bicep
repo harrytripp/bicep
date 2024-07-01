@@ -15,7 +15,7 @@ param subscriptionDisplayName string
 @description('Workload type for the subscription')
 param subscriptionWorkload string
 
-resource alias 'Microsoft.Subscription/aliases@2020-09-01' = {
+resource alias 'Microsoft.Subscription/aliases@2021-10-01' = {
   scope: tenant()
   name: subscriptionAlias
   properties: {

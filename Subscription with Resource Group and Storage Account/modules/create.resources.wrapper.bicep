@@ -11,7 +11,7 @@ param location string = deployment().location
 
 
 // deploy to the subscription and create the resourceGroup
-module rg '.microsoft.resources.resourcegroups.bicep' = {
+module rg 'microsoft.resources.resourcegroups.bicep' = {
   scope: subscription(subscriptionId)
   name: 'create-${resourceGroupName}'
   params: {
@@ -21,7 +21,7 @@ module rg '.microsoft.resources.resourcegroups.bicep' = {
 }
 
 // deploy to the resourceGroup and create the storageAccount
-module storage '.microsoft.storage.storageaccounts.bicep' = {
+module storage 'microsoft.storage.storageaccounts.bicep' = {
   scope: resourceGroup(subscriptionId, resourceGroupName)
   name: 'nested-createResourceGroup-${resourceGroupName}'
   params: {

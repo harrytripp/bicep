@@ -28,7 +28,7 @@ var endpointName = 'endpoint-${uniqueString(resourceGroup().id)}'
 // Generates CDN profile name from resource group id.
 var profileName = 'cdn-${uniqueString(resourceGroup().id)}'
 
-// Gets the web endpoint of the static webiste.
+// Gets the web endpoint of the static website.
 var storageAccountHostName = replace(replace(storageAccount.properties.primaryEndpoints.web, 'https://', ''), '/', '')
 
 resource contributorRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-05-01-preview' existing = {
@@ -37,7 +37,7 @@ resource contributorRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022
   name: '17d1049b-9a84-46fb-8f53-869881c3d3ab'
 }
 
-resource storageAccount 'Microsoft.Storage/storageAccounts@2023-04-01' = {
+resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   name: storageAccountName
   location: location
   kind: 'StorageV2'
@@ -53,7 +53,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-04-01' = {
   }
 }
 
-resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' = {
+resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-07-31-preview' = {
   name: 'DeploymentScript'
   location: location
 }
