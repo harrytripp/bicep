@@ -26,7 +26,7 @@ param resourceGroupName string = 'demo'
 param location string = deployment().location
 
 // Create the subscription and output the GUID
-module subAlias './modules/.microsoft.subscription.alias.bicep' = {
+module subAlias 'modules/subscription.alias.bicep' = {
     name: 'create-${subscriptionAlias}'
     params: {
         billingAccount: billingAccount
@@ -37,17 +37,17 @@ module subAlias './modules/.microsoft.subscription.alias.bicep' = {
     }
 }
 
-// creating resources in the subscription requires an extra level of "nesting" to reference the subscriptionId as a module output and use for a scope
+// Creating resources in the subscription requires an extra level of "nesting" to reference the subscriptionId as a module output and use for a scope
 // The module outputs cannot be used for the scope property so needs to be passed down as a parameter one level
-module createResourceGroupStorage './modules/.create.resources.wrapper.bicep' = {
+module createResourceGroupStorage 'modules/create.resources.wrapper.bicep' = {
     name: 'nested-createResourceGroup-${resourceGroupName}'
     params: {
         resourceGroupName: resourceGroupName
         location: location
-        subscriptionId: subAlias.outputs.subscriptionId  // this cannot be referenced directly on the scope property of a module so needs to be wrapped in another module
+        subscriptionId: subAlias.outputs.subscriptionId  // This cannot be referenced directly on the scope property of a module so needs to be wrapped in another module
 
     }
 }
 
 output subscriptionId string = subAlias.outputs.subscriptionId
-output storageAccountId string = createResourceGroupStorage.outputs.storageAccountId
+output storageAccountId string = createResourceGroupStorage.outputs.storageWebsiteURL

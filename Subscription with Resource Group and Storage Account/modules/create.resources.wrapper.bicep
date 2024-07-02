@@ -11,7 +11,7 @@ param location string = deployment().location
 
 
 // deploy to the subscription and create the resourceGroup
-module rg 'microsoft.resources.resourcegroups.bicep' = {
+module rg 'resources.resourcegroups.bicep' = {
   scope: subscription(subscriptionId)
   name: 'create-${resourceGroupName}'
   params: {
@@ -20,8 +20,8 @@ module rg 'microsoft.resources.resourcegroups.bicep' = {
   }
 }
 
-// deploy to the resourceGroup and create the storageAccount
-module storage 'microsoft.storage.storageaccounts.bicep' = {
+// deploy to the resourceGroup and create the storageAccount with a Static Website
+module storage 'storage.storageaccounts.bicep' = {
   scope: resourceGroup(subscriptionId, resourceGroupName)
   name: 'nested-createResourceGroup-${resourceGroupName}'
   params: {
@@ -29,4 +29,4 @@ module storage 'microsoft.storage.storageaccounts.bicep' = {
   }
 }
 
-output storageAccountId string = storage.outputs.storageAccountId
+output storageWebsiteURL string = storage.outputs.staticWebsiteUrl
