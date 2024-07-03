@@ -1,10 +1,7 @@
 targetScope =  'managementGroup'
 
-@description('EnrollmentAccount used for subscription billing')
-param enrollmentAccount string
-
-@description('BillingAccount used for subscription billing')
-param billingAccount string
+@description('Provide the full resource ID of billing scope to use for subscription creation.')
+param billingScope string
 
 @description('Alias to assign to the subscription')
 param subscriptionAlias string
@@ -29,8 +26,7 @@ param location string = deployment().location
 module subAlias 'modules/subscription.alias.bicep' = {
     name: 'create-${subscriptionAlias}'
     params: {
-        billingAccount: billingAccount
-        enrollmentAccount: enrollmentAccount
+        billingScope: billingScope
         subscriptionAlias: subscriptionAlias
         subscriptionDisplayName: subscriptionDisplayName
         subscriptionWorkload: subscriptionWorkload

@@ -1,10 +1,7 @@
 targetScope = 'managementGroup'
 
-@description('EnrollmentAccount used for subscription billing')
-param enrollmentAccount string
-
-@description('BillingAccount used for subscription billing')
-param billingAccount string
+@description('Provide the full resource ID of billing scope to use for subscription creation.')
+param billingScope string
 
 @description('Alias to assign to the subscription')
 param subscriptionAlias string
@@ -21,7 +18,7 @@ resource alias 'Microsoft.Subscription/aliases@2021-10-01' = {
   properties: {
     workload: subscriptionWorkload
     displayName: subscriptionDisplayName
-    billingScope: tenantResourceId('Microsoft.Billing/billingAccounts/enrollmentAccounts', billingAccount, enrollmentAccount)
+    billingScope: billingScope
   }
 }
 
