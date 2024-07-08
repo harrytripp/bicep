@@ -29,4 +29,19 @@ module storage 'storage.storageaccounts.bicep' = {
   }
 }
 
+@description('Outputs from resources.resourcegroups.bicep')
+//var cdnOriginHostHeader = storage.outputs.storageAccountHostName
+
+
+// deploy to the CDN and create an Endpoint to access the Static Website
+module cdn 'cdn.endpoint.bicep' = {
+  scope: resourceGroup(subscriptionId, resourceGroupName)
+  name: 'nested-createResourceGroup-${resourceGroupName}'
+}
+
+
+
 output storageWebsiteURL string = storage.outputs.staticWebsiteUrl
+
+@description('Outputs from resources.resourcegroups.bicep')
+output testOutputOriginHostHeader string = storage.outputs.storageAccountHostName

@@ -113,3 +113,4 @@ resource deploymentScript 'Microsoft.Resources/deploymentScripts@2023-08-01' = {
 }
 
 output staticWebsiteUrl string = storageAccount.properties.primaryEndpoints.web
+output storageAccountHostName string = replace(replace(storageAccount.properties.primaryEndpoints.blob, 'https://', ''), '/', '')
